@@ -50,7 +50,7 @@ class PolyTreeNode
       else
         queue += node.children
       end
-
+    end
     nil
   end
 
