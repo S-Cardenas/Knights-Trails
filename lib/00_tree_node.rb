@@ -8,8 +8,6 @@ class PolyTreeNode
     @children = []
   end
 
-
-
   def parent=(parent)
     @parent.children.delete(self) if !@parent.nil?
 
@@ -26,6 +24,18 @@ class PolyTreeNode
     raise "Not a child" if !children.include?(child)
     children.delete(child)
     child.parent = nil
+  end
+
+  def dfs(target_value)
+    return self if self.value == target_value
+
+    self.children.each do |child|
+      result = child.dfs(target_value)
+      next if result.nil?
+      return result
+    end
+
+    nil
   end
 
 end
