@@ -2,21 +2,21 @@ require_relative '00_tree_node'
 require 'byebug'
 
 class KnightPathFinder
-  attr_accessor :visited_positions, :board
+  attr_accessor :visited_positions
   def initialize(starting_position)
     @starting_position = PolyTreeNode.new(starting_position)
     @visited_positions = [@starting_position.value]
   end
 
-  # def [](pos)
-  #   x, y = pos
-  #   @board[x][y]
-  # end
-  #
-  # def []=(pos, val)
-  #   x, y = pos
-  #   @board[x][y] = val
-  # end
+  def [](pos)
+    x, y = pos
+    @board[x][y]
+  end
+
+  def []=(pos, val)
+    x, y = pos
+    @board[x][y] = val
+  end
 
   def valid_moves(pos)
     valid_moves = []
@@ -55,17 +55,17 @@ class KnightPathFinder
     end
     @starting_position
   end
+
+  def find_path(pos)
+    tree = self.build_move_tree
+    path = []
+    end_node = tree.bfs(pos)
+    path << end_node.value
+    until end_node.parent.nil?
+      path << end_node.parent.value
+      end_node = end_node.parent
+    end
+    path.reverse
+  end
+
 end
-#
-#   def build_move_tree
-#     queue = []
-#     queue << self
-#     until queue.empty?
-#       @tree << queue[0].value
-#       queue[0].new_move_pos().visited_positions.each do |pos|
-#         queue << KnightPathFinder.new(pos)
-#       end
-#       queue.shift
-#     end
-#     @tree
-# end
